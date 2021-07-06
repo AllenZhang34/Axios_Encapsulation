@@ -12,16 +12,6 @@ export default defineComponent({
       getListAPI().then((res) => {
         console.log(res);
       });
-      setTimeout(() => {
-        getListAPI().then((res) => {
-          console.log(res);
-        });
-      }, 200);
-      setTimeout(() => {
-        getListAPI().then((res) => {
-          console.log(res);
-        });
-      }, 400);
     }
 
     return {

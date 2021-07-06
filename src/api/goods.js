@@ -8,7 +8,9 @@ export function getListAPI(paramsList) {
       params: paramsList
     },
     {
-      repeat_request_cancel: false
+      repeat_request_cancel: false,
+      loading: true,
+      error_message_show: true
     },
     {
       text: 'Show goods list'

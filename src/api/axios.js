@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { ElLoading } from 'element-plus';
+import { ElLoading, ElMessage } from 'element-plus';
+import { getTokenAUTH } from '@/utils/auth';
 
 const LoadingInstance = {
   _target: null,
@@ -30,6 +31,9 @@ function myAxios(axiosConfig, customOptions, loadingOptions) {
           LoadingInstance._target = ElLoading.service(loadingOptions);
         }
       }
+      if (getTokenAUTH && typeof window !== 'undefined') {
+        config.headers.Authorization = getTokenAUTH();
+      }
       return config;
     },
     (error) => {
@@ -46,7 +50,7 @@ function myAxios(axiosConfig, customOptions, loadingOptions) {
     (error) => {
       error.config && removePending(error.config);
       custom_options.loading && closeLoading(custom_options);
-      httpErrorStatusHandle(error);
+      custom_options.error_message_show && httpErrorStatusHandle(error);
       return Promise.reject(error);
     }
   );
@@ -141,6 +145,11 @@ function httpErrorStatusHandle(error) {
   }
   if (error.message.includes('timeout')) message = '网络请求超时';
   if (error.message.includes('Network')) message = window.navigator.onLine ? '服务端异常' : '断网了';
+
+  ElMessage({
+    type: 'error',
+    message
+  });
 }
 
 export default myAxios;

@@ -26,8 +26,8 @@ App.post('/api/login', (req, res) => {
 });
 
 App.get('/api/list', (req, res) => {
-  res.write(`<head><meta charset="utf-8"/></head>`);
-  res.end('查询列表接口响应');
+  res.writeHead(502, { 'Content-Type': 'text/plain' });
+  res.end('网关错误');
 });
 
 server.listen(port, host, () => {
